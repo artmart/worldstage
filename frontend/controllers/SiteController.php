@@ -77,6 +77,15 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+    
+   	public function actionResults()
+	{         
+	   
+            $this->renderPartial('report_results'); 
+        //}else{
+       //     echo 'Some error';
+       // }
+	}
 
     /**
      * Logs in a user.

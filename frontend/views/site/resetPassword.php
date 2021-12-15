@@ -11,12 +11,13 @@ $this->title = 'Reset password';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-reset-password">
+<div class="mt-5 offset-lg-3 col-lg-6">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please choose your new password:</p>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
                 <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
@@ -28,4 +29,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+</div>
 </div>

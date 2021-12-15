@@ -1,9 +1,4 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
-
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\captcha\Captcha;
@@ -12,6 +7,7 @@ $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
+<div class="mt-5 offset-lg-3 col-lg-6">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -19,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
                 <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
@@ -42,4 +38,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+</div>
 </div>

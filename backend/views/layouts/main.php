@@ -1,8 +1,4 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\bootstrap4\Breadcrumbs;
@@ -59,9 +55,7 @@ AppAsset::register($this);
 
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?= Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -70,7 +64,7 @@ AppAsset::register($this);
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
         <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
+        <?php /*<p class="float-right"><?= Yii::powered() ?></p>*/ ?>
     </div>
 </footer>
 

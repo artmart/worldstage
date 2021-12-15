@@ -1,8 +1,4 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Breadcrumbs;
@@ -21,6 +17,25 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    
+    
+<link rel="apple-touch-icon" sizes="57x57" href="/vendors/images/logo/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/vendors/images/logo/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/vendors/images/logo/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/vendors/images/logo/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/vendors/images/logo/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/vendors/images/logo/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/vendors/images/logo/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/vendors/images/logo/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/vendors/images/logo/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/vendors/images/logo/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/vendors/images/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/vendors/images/logo/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/vendors/images/logo/favicon-16x16.png">
+<link rel="manifest" href="/vendors/images/logo/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/vendors/images/logo/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
@@ -28,14 +43,14 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' =>' <img src="/vendors/images/img/WS-CMYKLogo-WHT.png" alt="'.Yii::$app->name.'"  height="25"> ' ,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Home', 'url' => ['/']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
@@ -62,9 +77,7 @@ AppAsset::register($this);
 
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?= Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -73,7 +86,7 @@ AppAsset::register($this);
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
         <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
+        <?php /*<p class="float-right"><?= Yii::powered() ?></p>*/ ?>
     </div>
 </footer>
 

@@ -3,7 +3,7 @@ main > .container {
 }
 
 .footer {
-    background-color: #f5f5f5;
+    background-color: #052341;
     font-size: .9em;
     height: 60px;
 }
@@ -88,3 +88,18 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.bg-dark {
+    background-color: #012169 !important;
+}
+
+body
+{
+    font-family: Helvetica, Sans-Serif;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-family: Helvetica Condensed;
+}
+
