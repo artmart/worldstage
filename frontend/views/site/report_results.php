@@ -3,9 +3,7 @@
     float: right;
 }
 </style>
-
 <?php
-
 var_dump($_REQUEST['dynamic_form']);
 
 exit;
