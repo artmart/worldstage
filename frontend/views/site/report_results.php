@@ -6,7 +6,7 @@
 
 <?php
 
-print_r($_REQUEST);
+var_dump($_REQUEST['dynamic_form']);
 
 exit;
 ini_set('memory_limit', '512M');

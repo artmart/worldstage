@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'vendors/slick/slick.css',
         'vendors/slick/slick-theme.css',
+        //'vendors/imagepicker/image-picker/image-picker.css'
     ];
     public $js = [
      // "vendors/jquery/jquery.min.js",
@@ -23,6 +24,7 @@ class AppAsset extends AssetBundle
      'vendors/bootstrap4-toggle/js/bootstrap4-toggle.min.js', 
      'vendors/slick/slick.min.js',
      "vendors/jquery/dynamic-form.js",
+     //'vendors/imagepicker/image-picker/image-picker.min.js'
      
     ];
     public $depends = [
