@@ -42,6 +42,10 @@ AppAsset::register($this);
 
 <header>
     <?php
+$user_group = 0;
+if(!Yii::$app->user->isGuest) {
+$user_group = Yii::$app->user->identity->user_group;
+}
     NavBar::begin([
         'brandLabel' =>' <img src="/vendors/images/img/WS-CMYKLogo-WHT.png" alt="'.Yii::$app->name.'"  height="25"> ' ,
         'brandUrl' => Yii::$app->homeUrl,
@@ -54,14 +58,45 @@ AppAsset::register($this);
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
+    
+    if($user_group==1){
+
+        
+        
+    $tables = [
+        ['label' => 'Users', 'url' => ['/user']],
+        ['label' => 'Products', 'url' => ['/products']],
+        ['label' => 'Ballasts', 'url' => ['/ballasts']],
+        ['label' => 'Install time', 'url' => ['/installtime']],
+        ['label' => 'Repair', 'url' => ['/repair']],
+        ['label' => 'Coloring', 'url' => ['/coloring']],
+        ['label' => 'Prices', 'url' => ['/prices']],
+        
+        
+    ];
+    
+    //$tables[] = ['label' => $p['page'], 'url' => $p['page_url']];
+    $menuItems[] = ['label' => 'Manage Data', 'items' =>$tables];
+        }
+    
+    
+    
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        
+        
+
+         
+        
+        
+        
+        
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->firstname . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

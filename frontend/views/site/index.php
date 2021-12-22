@@ -37,7 +37,7 @@ $this->title = 'Worldstage';
 
 
 body {
-  background-image: url('/vendors/images/img/1.png');
+  /*background-image: url('/vendors/images/img/1.png');*/
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -124,10 +124,10 @@ body {
     <label class="col-md-5">Product sizing: </label>  
     <div class="col-md-7">   
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-warning active">
+      <label class="btn radio_button active">
         <input type="radio" name="product_type" id="product_type" autocomplete="off" checked> Metric
       </label>
-      <label class="btn btn-warning">
+      <label class="btn radio_button">
         <input type="radio" name="product_type" id="product_type" autocomplete="off"> Imperial
     </div>
     </div>
