@@ -110,7 +110,7 @@ class Products extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getInstallTimes()
+    public function getinstalltimes()
     {
         return $this->hasMany(InstallTime::className(), ['product_id' => 'id']);
     }

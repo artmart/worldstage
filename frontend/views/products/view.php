@@ -220,7 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
   <div class="tab-pane fade" id="installtimes" role="tabpanel" aria-labelledby="installtimes-tab">
   <div class="yscroll">
   <?php
- $installtimes_data_provider = new \yii\data\ActiveDataProvider(['query' => $model->getInstallTimes(), 'pagination' => false]);
+ $installtimes_data_provider = new \yii\data\ActiveDataProvider(['query' => $model->getinstalltimes(), 'pagination' => false]);
  $installtimescount = $installtimes_data_provider->getTotalCount();
   
   if($installtimescount<3){ 
