@@ -2,15 +2,18 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use frontend\models\Products;
+//use frontend\models\Products;
+
+$action = '/ballasts/create';
+if(isset($update)){$action = '/ballasts/update?id='.$model->id;}
 ?>
 
 <div class="ballasts-form">
 <div class="mt-1 offset-lg-1 col-lg-10">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' =>[$action]]); ?>
 
-    <?= $form->field($model, 'product_id')->dropDownList(ArrayHelper::map(Products::find()->asArray()->orderBy('product_name')->all(), 'id', 'product_name'), ['prompt'=>'- Select -', 'class'=>'form-control'])
-    //$form->field($model, 'product_id')->textInput() ?>
+    <?php // $form->field($model, 'product_id')->dropDownList(ArrayHelper::map(Products::find()->asArray()->orderBy('product_name')->all(), 'id', 'product_name'), ['prompt'=>'- Select -', 'class'=>'form-control'])
+    echo $form->field($model, 'product_id')->hiddenInput()->label(false); //->textInput() ?>
 
 <div class="row">
     <div class="col-lg-3">

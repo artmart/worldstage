@@ -2,12 +2,15 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use frontend\models\Products;
 use frontend\models\ProductsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
+use yii\helpers\BaseFileHelper;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -81,8 +84,31 @@ class ProductsController extends Controller
         $model = new Products();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())){ 
+                
+            $link_to_picture_flown = UploadedFile::getInstance($model, 'link_to_picture_flown');
+            $link_to_picture_ground_support = UploadedFile::getInstance($model, 'link_to_picture_ground_support');
+            $alias = Yii::getAlias("@frontend/web/uploads/products");
+            BaseFileHelper::createDirectory($alias);
+            
+            if (!empty($link_to_picture_flown)) {
+                $filename = 'flown'.time(); 
+                $name = $filename . '.' . $link_to_picture_flown->extension;
+                $path = $alias . DIRECTORY_SEPARATOR . $name;
+                $model->link_to_picture_flown = $name;
+                $link_to_picture_flown->saveAs($path);
+			} 
+            if (!empty($link_to_picture_ground_support)) {
+                $filename = 'ground'.time(); 
+                $name = $filename . '.' . $link_to_picture_ground_support->extension;
+                $path = $alias . DIRECTORY_SEPARATOR . $name;
+                $model->link_to_picture_ground_support = $name;
+                $link_to_picture_ground_support->saveAs($path);
+			}
+  
+                if($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -103,9 +129,48 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $file_flown = $model->link_to_picture_flown;
+        $file_ground = $model->link_to_picture_ground_support;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())){
+            
+            $link_to_picture_flown = UploadedFile::getInstance($model, 'link_to_picture_flown');
+            $link_to_picture_ground_support = UploadedFile::getInstance($model, 'link_to_picture_ground_support');
+            $alias = Yii::getAlias("@frontend/web/uploads/products");
+            BaseFileHelper::createDirectory($alias);
+            
+            if($link_to_picture_flown){
+                if($file_flown) {
+                $path1 = Yii::getAlias("@frontend").'/web/uploads/products/'.$file_flown;
+                if(file_exists($path1)){unlink($path1);}
+                }
+
+                $filename = 'flown'.time(); 
+                $name = $filename . '.' . $link_to_picture_flown->extension;
+                $path = $alias . DIRECTORY_SEPARATOR . $name;
+                $model->link_to_picture_flown = $name;
+                                    
+                $link_to_picture_flown->saveAs($path);
+			}else{$model->link_to_picture_flown = $file_flown;}
+            
+            if($link_to_picture_ground_support){
+                if($file_ground) {
+                $path1 = Yii::getAlias("@frontend").'/web/uploads/products/'.$file_ground;
+                if(file_exists($path1)){unlink($path1);}
+                }
+
+                $filename = 'ground'.time(); 
+                $name = $filename . '.' . $link_to_picture_ground_support->extension;
+                $path = $alias . DIRECTORY_SEPARATOR . $name;
+                $model->link_to_picture_ground_support = $name;
+                                    
+                $link_to_picture_ground_support->saveAs($path);
+			}else{$model->link_to_picture_ground_support = $file_ground;}
+            
+            
+            if($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -122,7 +187,18 @@ class ProductsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        if($model->link_to_picture_flown){
+        $path1 = Yii::getAlias("@frontend").'/web/uploads/products/'.$model->link_to_picture_flown;
+        if(file_exists($path1)){unlink($path1);}
+        }
+        if($model->link_to_picture_ground_support){
+        $path1 = Yii::getAlias("@frontend").'/web/uploads/products/'.$model->link_to_picture_ground_support;
+        if(file_exists($path1)){unlink($path1);}
+        }
+                
+        $model->delete();
 
         return $this->redirect(['index']);
     }

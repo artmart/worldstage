@@ -82,7 +82,9 @@ class PricesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                //return $this->redirect(['view', 'id' => $model->id]);
+                
+                return $this->redirect(['products/view', 'id' => $model->product_id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -105,7 +107,9 @@ class PricesController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //return $this->redirect(['view', 'id' => $model->id]);
+            
+            return $this->redirect(['products/view', 'id' => $model->product_id]);
         }
 
         return $this->render('update', [

@@ -57,12 +57,14 @@ $user_group = Yii::$app->user->identity->user_group;
         ['label' => 'Home', 'url' => ['/']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Products', 'url' => ['/products']],
+        
     ];
     
     if($user_group==1){
 
         
-        
+    /*    
     $tables = [
         ['label' => 'Users', 'url' => ['/user']],
         ['label' => 'Products', 'url' => ['/products']],
@@ -74,9 +76,10 @@ $user_group = Yii::$app->user->identity->user_group;
         
         
     ];
+    */
     
     //$tables[] = ['label' => $p['page'], 'url' => $p['page_url']];
-    $menuItems[] = ['label' => 'Manage Data', 'items' =>$tables];
+    //$menuItems[] = ['label' => 'Manage Data', 'items' =>$tables];
         }
     
     

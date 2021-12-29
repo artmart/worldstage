@@ -14,7 +14,6 @@ use Yii;
  * @property float $flown
  * @property float $sandbag_estimate
  * @property float $mini_g_block_estimate
- *
  * @property Products $product
  */
 class Prices extends \yii\db\ActiveRecord
