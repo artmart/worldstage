@@ -8,5 +8,5 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="ballasts-update">
     <h1><?= Html::encode($this->title) ?></h1>
     <hr />
-    <?= $this->render('_form', ['model' => $model, 'update'=>1]) ?>
+    <?= $this->render('_form', ['model' => $model, 'update'=>1, 'max_height_ground'=>$max_height_ground]) ?>
 </div>

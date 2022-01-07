@@ -62,6 +62,7 @@ $user_group = Yii::$app->user->identity->user_group;
     
     if($user_group==1){
     $menuItems[] = ['label' => 'Products', 'url' => ['/products']];
+    $menuItems[] = ['label' => 'Users', 'url' => ['/user']];
         
     /*    
     $tables = [

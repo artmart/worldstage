@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use frontend\models\Products;
+
 /**
  * BallastsController implements the CRUD actions for Ballasts model.
  */
@@ -110,10 +112,9 @@ class BallastsController extends Controller
             
             return $this->redirect(['products/view', 'id' => $model->product_id]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        
+        $product = Products::findOne($model->product_id);
+        return $this->render('update', ['model' => $model, 'max_height_ground'=>$product->max_height_ground]);
     }
 
     /**

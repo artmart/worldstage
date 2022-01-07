@@ -67,7 +67,7 @@ use yii\widgets\ActiveForm;
     <div class="col-lg-3">
     <?= $form->field($model, 'full_power_draw_amps')->textInput() ?>    
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
     <?php // $form->field($model, 'link_to_picture_flown')->textInput(['maxlength' => true]) ?> 
     <?= $form->field($model, 'link_to_picture_flown')->fileInput() ?>
     <?php 
@@ -78,7 +78,7 @@ use yii\widgets\ActiveForm;
 			</div>	
     <?php } ?>  
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
     <?php // $form->field($model, 'link_to_picture_ground_support')->textInput(['maxlength' => true]) ?> 
     <?= $form->field($model, 'link_to_picture_ground_support')->fileInput() ?>
     <?php 
@@ -88,8 +88,13 @@ use yii\widgets\ActiveForm;
              <img src="<?=$file1?>" alt="" width="200" height="200">
 			</div>	
     <?php } ?>    
-    </div> 
     </div>
+    <div class="col-lg-3">
+    <?= $form->field($model, 'primary_picture')->radioList(['0'=>'Ground support', '1'=>'Flown']) ?>
+    </div>
+    
+     
+</div>
 </div> 
 <hr />
 <div class="row">

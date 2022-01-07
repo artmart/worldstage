@@ -49,10 +49,10 @@ class Products extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_name', 'phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch'], 'required'],
+            [['product_name', 'phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'primary_picture'], 'required'],
             [['phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 'recommended_max_height_flown', 'max_height_flown'], 'number'],
             [['product_name'], 'string', 'max' => 255],
-            
+            [['primary_picture'], 'integer'],
             [['link_to_picture_ground_support', 'link_to_picture_flown'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
@@ -82,6 +82,7 @@ class Products extends \yii\db\ActiveRecord
             'max_height_ground' => 'Max Height (Ground)',
             'recommended_max_height_flown' => 'Recommended Max Height (Flown)',
             'max_height_flown' => 'Max Height (Flown)',
+            'primary_picture' => 'Primary Picture',
         ];
     }
 

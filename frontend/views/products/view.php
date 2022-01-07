@@ -45,19 +45,49 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Delete', ['delete', 'id' => $model->id], ['class' => 'btn btn-danger', 'data' => ['confirm' => 'Are you sure you want to delete this item?', 'method' => 'post']]) ?>
         </p>
     </div>
-  <?= DetailView::widget([
+  <?php
+  $primary_pictures = ['0'=>'Ground support', '1'=>'Flown'];
+  
+  echo DetailView::widget([
         'model' => $model,
         'attributes' => ['product_name', 'phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent',
                          'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch',
-                         'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 'recommended_max_height_flown', 'max_height_flown'
+                         'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 'recommended_max_height_flown', 'max_height_flown',
+                         ['attribute' => 'primary_picture', 'value' =>  $primary_pictures[$model->primary_picture]],
         ],
     ]) ?>
+    
+    
+  <div class="row">  
+    <div class="col-lg-6">
+    <label>Link To Picture Flown</label> 
+      <?php 
+	   $file = Url::to('@web/uploads/products/'.$model->link_to_picture_flown, true);
+		if ($model->link_to_picture_flown){ ?>
+			<div class="form-group">
+             <img src="<?=$file?>" alt="" width="100%">
+			</div>	
+    <?php } ?>  
+    </div>
+    <div class="col-lg-6">
+    <label>Link To Picture Ground</label>
+    <?php 
+	   $file1 = Url::to('@web/uploads/products/'.$model->link_to_picture_ground_support, true);
+		if ($model->link_to_picture_ground_support){ ?>
+			<div class="form-group">
+             <img src="<?=$file1?>" alt="" width="100%" >
+			</div>	
+    <?php } ?> 
+    </div>
+   </div> 
   </div>
+
   <div class="col-lg-4"> 
+<div class="row">
 <?php $ballast_model= Ballasts::find()->where(['product_id' =>$model->id])->one();
   if($ballast_model){?>
    <div class="row clearfix">
-    <h1 class="col-sm-10">Ballast</h1>
+    <h1 class="col-sm-10">Ballasts</h1>
     <p class="col-sm-2 d-flex justify-content-end">
         <?= Html::a('Update', ['ballasts/update', 'id' => $ballast_model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['ballasts/delete', 'id' => $ballast_model->id], [
@@ -65,11 +95,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 </div>
-   <?= DetailView::widget([
-        'model' => $ballast_model,
-        'attributes' => ['_1_column_tall', '_2_column_tall', '_3_column_tall', '_4_column_tall', '_5_column_tall', '_6_column_tall', '_7_column_tall', '_8_column_tall',
-                         '_9_column_tall', '_10_column_tall', '_11_column_tall', '_12_column_tall', '_13_column_tall', '_14_column_tall', '_15_column_tall'],
-    ]);
+   <?php
+   for($b=1; $b<=$model->max_height_ground; $b++){$column_ralls[] = '_'.$b.'_column_tall';}
+  // $column_ralls = ['_1_column_tall', '_2_column_tall', '_3_column_tall', '_4_column_tall', '_5_column_tall', '_6_column_tall', '_7_column_tall', '_8_column_tall',
+   //                      '_9_column_tall', '_10_column_tall', '_11_column_tall', '_12_column_tall', '_13_column_tall', '_14_column_tall', '_15_column_tall'];
+   
+   echo DetailView::widget(['model' => $ballast_model, 'attributes' =>$column_ralls]);
     }else{ ?>
 <div class="alert alert-warning">No Ballast available for this product yet.</div>
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Ballast</button>
@@ -86,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php  
         $new_ballasts_model = new Ballasts();
         $new_ballasts_model->product_id = $model->id;
-        echo yii\base\View::render('//ballasts/_form', ['model'=>$new_ballasts_model])
+        echo yii\base\View::render('//ballasts/_form', ['model'=>$new_ballasts_model, 'max_height_ground'=>$model->max_height_ground])
         ?>
       </div>
       <div class="modal-footer">
@@ -96,33 +127,12 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
 </div>  
 <?php }?>
-  </div>
-  </div>  
+</div>
+<hr />
+    <div class="row">
     
-     
-    <hr />
+    <h1>Timing</h1>
     
-  <div class="row">
-  <div class="col-lg-4">
-      <?php 
-	   $file = Url::to('@web/uploads/products/'.$model->link_to_picture_flown, true);
-		if ($model->link_to_picture_flown){ ?>
-			<div class="form-group">
-             <img src="<?=$file?>" alt="" width="100%">
-			</div>	
-    <?php } ?>  
-    </div>
-    <div class="col-lg-4">
-    <?php 
-	   $file1 = Url::to('@web/uploads/products/'.$model->link_to_picture_ground_support, true);
-		if ($model->link_to_picture_ground_support){ ?>
-			<div class="form-group">
-             <img src="<?=$file1?>" alt="" width="100%" >
-			</div>	
-    <?php } ?> 
-    </div>
-   
-    <div class="col-lg-4">
     <table class="table table-striped">
         <tbody>
           <tr><td><strong>Repair</strong></td>
@@ -212,7 +222,24 @@ $this->params['breadcrumbs'][] = $this->title;
           </tr>
         </tbody>
       </table>
-</div>    
+</div>
+
+
+
+
+
+
+
+  </div>
+  </div>  
+    
+     
+    <hr />
+    
+  <div class="row">
+
+   
+    
 </div>
 <hr />  
 </div>

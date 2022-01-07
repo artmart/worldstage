@@ -13,8 +13,27 @@ if(isset($update)){$action = '/ballasts/update?id='.$model->id;}
     <?php $form = ActiveForm::begin(['action' =>[$action]]); ?>
 
     <?php // $form->field($model, 'product_id')->dropDownList(ArrayHelper::map(Products::find()->asArray()->orderBy('product_name')->all(), 'id', 'product_name'), ['prompt'=>'- Select -', 'class'=>'form-control'])
-    echo $form->field($model, 'product_id')->hiddenInput()->label(false); //->textInput() ?>
+    echo $form->field($model, 'product_id')->hiddenInput()->label(false); //->textInput() 
+    ?>
+    
+<div class="row">    
+<?php  for($b=1; $b<=$max_height_ground; $b++){ ?>
+    <div class="col-lg-3">
+    <?= $form->field($model, '_'.$b.'_column_tall')->textInput() ?>   
+    </div>
+    
+    
+    
+<?php  }  ?>
 
+    <div class="col-lg-3">
+    <div class="form-group" style="margin-top: 30px;">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success', 'style'=>"width: 100%;"]) ?>
+    </div>   
+    </div>   
+</div>
+
+<?php /* ?>
 <div class="row">
     <div class="col-lg-3">
     <?= $form->field($model, '_1_column_tall')->textInput() ?>   
@@ -72,7 +91,9 @@ if(isset($update)){$action = '/ballasts/update?id='.$model->id;}
         <?= Html::submitButton('Save', ['class' => 'btn btn-success', 'style'=>"width: 100%;"]) ?>
     </div>   
     </div>
-</div>    
+</div> 
+<?php */ ?>
+
     <?php ActiveForm::end(); ?>
 
 </div>
