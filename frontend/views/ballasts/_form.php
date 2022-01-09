@@ -17,7 +17,7 @@ if(isset($update)){$action = '/ballasts/update?id='.$model->id;}
     ?>
     
 <div class="row">    
-<?php  for($b=1; $b<=$max_height_ground; $b++){ ?>
+<?php  for($b=1; $b<=min(15, $max_height_ground); $b++){ ?>
     <div class="col-lg-3">
     <?= $form->field($model, '_'.$b.'_column_tall')->textInput() ?>   
     </div>
