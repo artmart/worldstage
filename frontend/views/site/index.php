@@ -321,8 +321,11 @@ var options = {
             $k=1;
             if($k==1){$checked = 'checked';}else{$checked = '';}
             foreach($products as $p){
-            $pic = '/uploads/products/'. $p->link_to_picture_flown;
-            if($p->primary_picture==1){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
+            $pic = '/uploads/products/no-picture.jpg';
+            if($p->link_to_picture_flown){$pic = '/uploads/products/'. $p->link_to_picture_flown;}
+            if($p->primary_picture==1 && $p->link_to_picture_ground_support){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}  
+            //$pic = '/uploads/products/'. $p->link_to_picture_flown;
+            //if($p->primary_picture==1){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
             ?>
             formfields += '<div><label class="btn"><input type="radio" name="wall_type['+x+']" value="<?=$p->id;?>" <?=$checked;?>><img src="<?=$pic;?>"></label></div>';
             <?php $k++;} ?>

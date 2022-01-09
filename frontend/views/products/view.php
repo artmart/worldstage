@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 </div>
    <?php
-   for($b=1; $b<=$model->max_height_ground; $b++){$column_ralls[] = '_'.$b.'_column_tall';}
+   for($b=1; $b<=min(15, $model->max_height_ground); $b++){$column_ralls[] = '_'.$b.'_column_tall';}
   // $column_ralls = ['_1_column_tall', '_2_column_tall', '_3_column_tall', '_4_column_tall', '_5_column_tall', '_6_column_tall', '_7_column_tall', '_8_column_tall',
    //                      '_9_column_tall', '_10_column_tall', '_11_column_tall', '_12_column_tall', '_13_column_tall', '_14_column_tall', '_15_column_tall'];
    
