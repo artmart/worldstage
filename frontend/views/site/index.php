@@ -1,5 +1,6 @@
 <?php
 $this->title = 'Worldstage';
+use frontend\models\Products;
 ?>
 <style>
 .jumbotron {
@@ -8,7 +9,6 @@ $this->title = 'Worldstage';
 .card {
     border: 1px solid #702F8A;
 }
-
 
 .btn-primary {
     color: #fff;
@@ -22,7 +22,6 @@ $this->title = 'Worldstage';
     border-color: #702F8A;
 }
 
-
 .cropped {
     width: 50%;
     height: 100%;
@@ -35,7 +34,6 @@ $this->title = 'Worldstage';
     margin: 0px 0px 0px 0px;
 }
 
-
 body {
   /*background-image: url('/vendors/images/img/1.png');*/
   background-repeat: no-repeat;
@@ -43,8 +41,6 @@ body {
   background-size: cover;
   background-position: right;
 }
-
-
 
  html, body {
       margin: 0;
@@ -73,7 +69,6 @@ body {
       color: black;
     }
 
-
     .slick-slide {
       transition: all ease-in-out .3s;
       opacity: .2;
@@ -87,63 +82,53 @@ body {
       opacity: 1;
     }
     
-    
 .slider {
     margin: 20px;
 }
-
 </style>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<div class="site-index">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>-->
 
+<?php
+$products = Products::find()->all();
+?>
+<div class="site-index">
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4">LED Product Calculator</h1>
-
         <p class="lead">Fill the below form to get results.</p>
-
-        <!--<p><a class="btn btn-lg btn-success" id="get_started" href="#">Get started</a></p>
-        <hr />-->
     </div>
-
     <div class="body-content">
-       
-
     <div class="container">
     
 <form id="form_id">
-    <div class="form-group card" id="dynamic_form">
-    <div class="card-body"> 
-    <!--<div class="cropped">
-      <img src="/vendors/images/img/1.png">       
-    </div>  -->      
+<div class="input_fields_wrap">
+    <div class="form-group card">
+    <div class="card-body">     
     <div class="row justify-content-center align-items-center">                        
-        <!--<input type="checkbox" id="product_type" name="product_type" checked data-toggle="toggle" data-on="Metric" data-off="Imperial" data-onstyle="success" data-offstyle="danger">-->
+        
     <div class="col-md-4">
     <div class="row">  
     <label class="col-md-5">Product sizing: </label>  
     <div class="col-md-7">   
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label class="btn radio_button active">
-        <input type="radio" name="product_type" id="product_type" autocomplete="off" checked> Metric
+        <input type="radio" name='product_sizing[0]' value="0" checked> Metric
       </label>
       <label class="btn radio_button">
-        <input type="radio" name="product_type" id="product_type" autocomplete="off"> Imperial
+        <input type="radio" name='product_sizing[0]' value="1"> Imperial
+      </label>
     </div>
     </div>
     </div>
     </div>
-    <!--</div> 
-    
-    <div class="row justify-content-center align-items-center mt-2">  -->
+
     <div class="col-md-4">
     <div class="row">
     <label class="col-md-5">Size Type: </label>   
     <div class="col-md-7">
-        <select class="form-control" id="size_type" name="size_type">
-          <option>- Select -</option>
-          <option>Tile</option>
-          <option>Physical</option>
+        <select class="form-control" id="size_type" name="size_type[0]" onchange="sizetypechange(this.id)">
+          <option value="tile">Tile</option>
+          <option value="physical">Physical</option>
         </select>
     </div>
     </div>
@@ -153,140 +138,108 @@ body {
     <div class="row justify-content-center align-items-center mt-2">
     <div class="col-md-4">
     <div class="row">
-    <label class="col-md-5">Wall Width: </label> 
+    <label class="col-md-5 wall_width_label">Wall Width: </label> 
     <div class="col-md-7">
-        <input type="text" name="wall_width" id="wall_width" placeholder="Wall Width" class="form-control">
+        <input type="text" name="wall_width[0]" id="wall_width" placeholder="Wall Width" class="form-control">
     </div>
     </div>
     </div>
-    <!--</div>
-    <div class="row justify-content-center align-items-center mt-2"> -->
+
     <div class="col-md-4">
     <div class="row">
-    <label class="col-md-5">Wall Height: </label> 
+    <label class="col-md-5 wall_height_label">Wall Height: </label> 
     <div class="col-md-7">
-        <input type="text" name="wall_height" id="wall_height" placeholder="Wall Height" class="form-control">
+        <input type="text" name="wall_height[0]" id="wall_height" placeholder="Wall Height" class="form-control">
     </div>
     </div>
     </div> 
     </div> 
                    
     <div class="row justify-content-center align-items-center mt-2" style="border: 1px solid #702F8A;"> 
-    
-    <label class="col-md-2">Wall Type: </label>            
-    <section class="row responsive slider col-md-7">    
-        <div class="active">
-          <label class="btn">
-            <input type="radio" name="wall_type" id="wall_type" autocomplete="off" checked><img src="http://placehold.it/350x300?text=1">
-          </label>
-        </div>
-        <div>
-          <label class="btn">
-            <input type="radio" name="wall_type" id="wall_type" autocomplete="off" checked><img src="http://placehold.it/350x300?text=2">
-          </label>
-        </div>
-        <div>
-          <label class="btn">
-            <input type="radio" name="wall_type" id="wall_type" autocomplete="off" checked><img src="http://placehold.it/350x300?text=3">
-          </label>
-        </div>
-     </section>
+    <label class="col-md-2">Wall Type: </label>        
+    <section class="regular slider col-md-7">  
+    <?php 
+    $k=1;
+    if($k==1){$checked = 'checked';}else{$checked = '';}
+    foreach($products as $p){  
+    $pic = '/uploads/products/no-picture.jpg';
+    if($p->link_to_picture_flown){$pic = '/uploads/products/'. $p->link_to_picture_flown;}
+    if($p->primary_picture==1 && $p->link_to_picture_ground_support){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
+    ?>
+    <div><label class="btn"><input type="radio" name="wall_type[0]" value="<?=$p->id;?>" <?=$checked;?>><img src="<?=$pic;?>"></label></div>
+    <?php $k++; } ?>  
+    </section> 
     </div> 
-
-<?php /*
-  <select class="theme" name='wall_type[]' class="image-picker show-labels show-html">           
-  
-    
-
-<?php 
-$thems = [['id'=>1, 'name'=>'Tile only view'], ['id'=>2, 'name'=>'Ground Support'], ['id'=>3, 'name'=>'Flown'] ];
-foreach($thems as $theme){
-    $img = 'http://placehold.it/350x300?text='.$theme['id']; 
-?>
-<div>
-<option data-img-src="<?php echo $img; ?>" value="<?php echo $theme['id']; ?>"><?php echo $theme['name']; ?></option>
-</div>
-<?php } ?>
-
- </select>
-
-*/ ?>
-          
-    
-
-        
-      
-                
+       
     <div class="row justify-content-center align-items-center mt-2">  
     <div class="col-md-4">
     <div class="row">
     <label class="col-md-4">Install Type: </label>  
     <div class="col-md-7">
-        <select class="form-control" id="install_type" name="install_type">
-          <option>Flown</option>
-          <option>Ground Stack</option>
-          <option>Custom</option>
+        <select class="form-control" id="install_type" name="install_type[0]">
+          <option value="Flown">Flown</option>
+          <option value="Ground Stack">Ground Stack</option>
+          <option value="Custom">Custom</option>
         </select>
     </div>
     </div>
     </div>
-
+    
     <div class="col-md-4">
     <div class="row">
-        <label class="col-md-4">Quantity: </label>    
-        <div class="col-md-7">
-            <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity">
-        </div>
-     </div> 
-     </div>  
-        
-        <div class="button-group">
-            <a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add more walls</a>
-            <a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
-        </div>
+    <label class="col-md-4">Quantity: </label>    
+    <div class="col-md-7">
+        <input type="text" class="form-control" name="quantity[0]" id="quantity" placeholder="Quantity">
     </div>
-    
-    
+    </div> 
+    </div>  
     </div>
+ 
+</div>
     
-    
+</div>
+</div>
 
 </div>
 <div class="row justify-content-center align-items-center"> 
-<button type="submit" class="btn btn-primary" >Submit</button>
+<button type="submit" class="btn btn-primary" onclick="results()">Submit</button>
+<button class="add_field_button btn btn-primary">Add more walls</button>
 </div>
 </form>
+<hr />
         <div class="row">
-        <div id="wait" style="display:none;position:absolute;top:50%;left:50%;padding:2px; z-index: 1000;">
-            <img src='/img/ajaxloader.gif'/>
-        </div>
+        <div id="wait" style="display:none;position:absolute;top:50%;left:50%;padding:2px; z-index: 1000;"><img src='/img/ajaxloader.gif'/></div>
         <div id="results"></div>  
         </div>
-    </div>
-        
-
-
-    </div>
+</div>
+</div>
 </div>
 <br />
 <br />
 <br />
 <script>
-/*
-$('.cb-value').click(function() {
-  var mainParent = $(this).parent('.toggle-btn');
-  if($(mainParent).find('input.cb-value').is(':checked')) {
-    $(mainParent).addClass('active');
-  } else {
-    $(mainParent).removeClass('active');
-  }
+ function sizetypechange(id){
+    var div_id = '#wall_width'+id.replace("size_type", "");
+    var div_id2 = '#wall_height'+id.replace("size_type", "");
+    
+    var wall_width_text = 'Wall Width';
+    var wall_height_text = 'Wall Height';
+    if($('#'+id).val()=='tile'){
+            wall_width_text = 'Tiles Wide';
+            wall_height_text = 'Tiles Tall';            
+        }
+     $(div_id).attr("placeholder", wall_width_text);
+     $(div_id).closest('.row').find('.wall_width_label').text(wall_width_text+':'); 
+     
+     $(div_id2).attr("placeholder", wall_height_text);
+     $(div_id2).closest('.row').find('.wall_height_label').text(wall_height_text+':');
+ }
 
-})
-*/
 
-//$("#form_id").submit(function(){return false;});
+$("#form_id").submit(function(){return false;});
 	
        function results(){
+        
         var data = $("#form_id").serialize();
         $.ajax({
     			type: 'post',
@@ -304,98 +257,103 @@ $('.cb-value').click(function() {
             }); 
       }
 
-
 /*
-$("#get_started").click(function() {
-    $('html,body').animate({
-        //$('#dynamic_form').show();
-        scrollTop: $("#dynamic_form").offset().top},'slow');
-});
-*/
-//function togglethis(name){
-  //  $(this).prop('checked');
-//}
-
-
-$('.responsive').slick({
-  //dots: false,
-  infinite: false,
-  speed: 300,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  //arrows: true,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
+function destroyCarousel() {
+    if ($('.regular').hasClass('slick-initialized')) {
+        $('.regular').slick('unslick');
+        $('.regular').slick('slickRemove', 0);
     }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-  ]
-}); 
+}
+*/
 
-$(document).ready(function() {
+function applySlider() {
+    $(".regular").slick({
+        focusOnSelect: true,
+        dots: false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3
+      });
+  }
+
+$(document).ready(function(){
+applySlider();
     
-//$(".theme").imagepicker({show_label: true});
+	var max_fields      = 10; 
+	var wrapper   		= $(".input_fields_wrap"); 
+	var add_button      = $(".add_field_button"); 
+    var append;   
+    var formfields;
 
+var options = {
+        focusOnSelect: true,
+        dots: false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3
+};
+	var x = 1; 
+	$(add_button).click(function(e){ 
+		e.preventDefault();
+		if(x < max_fields){ 
+		  
+            formfields = '<div class="form-group card"><div class="card-body">';
+            formfields += '<div class="row justify-content-center align-items-center">';
+            formfields += '<div class="col-md-4"><div class="row"><label class="col-md-5">Product sizing: </label><div class="col-md-7">';   
+            formfields += '<div class="btn-group btn-group-toggle" data-toggle="buttons">';
+            formfields += '<label class="btn radio_button active"><input type="radio" name="product_sizing['+x+']" value="0" checked> Metric</label>';
+            formfields += '<label class="btn radio_button"><input type="radio" name="product_sizing['+x+']"  value="1"> Imperial</label></div></div></div></div>';
+            
+            formfields += '<div class="col-md-4"><div class="row"><label class="col-md-5">Size Type: </label><div class="col-md-7">';
+            formfields += '<select class="form-control" id="size_type" name="size_type['+x+']" onchange="sizetypechange(this.id)">';
+            formfields += '<option value="tile">Tile</option><option value="physical">Physical</option></select></div></div></div></div>';
+                        
+            formfields += '<div class="row justify-content-center align-items-center mt-2"><div class="col-md-4"><div class="row">';
+            formfields += '<label class="col-md-5 wall_width_label">Wall Width: </label><div class="col-md-7">';
+            formfields += '<input type="text" name="wall_width['+x+']" id="wall_width" placeholder="Wall Width" class="form-control"></div></div></div>';
 
+            formfields += '<div class="col-md-4"><div class="row"><label class="col-md-5 wall_height_label">Wall Height: </label><div class="col-md-7">';
+            formfields += '<input type="text" name="wall_height['+x+']" id="wall_height" placeholder="Wall Height" class="form-control"></div></div></div></div>';
+            
+            formfields += '<div class="row justify-content-center align-items-center mt-2" style="border: 1px solid #702F8A;">'; 
+            formfields += '<label class="col-md-2">Wall Type: </label><section class="regular slider col-md-7" id="regular['+x+']">';    
+            <?php 
+            $k=1;
+            if($k==1){$checked = 'checked';}else{$checked = '';}
+            foreach($products as $p){
+            $pic = '/uploads/products/'. $p->link_to_picture_flown;
+            if($p->primary_picture==1){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
+            ?>
+            formfields += '<div><label class="btn"><input type="radio" name="wall_type['+x+']" value="<?=$p->id;?>" <?=$checked;?>><img src="<?=$pic;?>"></label></div>';
+            <?php $k++;} ?>
+            formfields += '</section></div>';
+                    
+            formfields += '<div class="row justify-content-center align-items-center mt-2"><div class="col-md-4"><div class="row">';
+            formfields += '<label class="col-md-4">Install Type: </label><div class="col-md-7">';
+            formfields += '<select class="form-control" id="install_type" name="install_type['+x+']">';
+            formfields += '<option value="Flown">Flown</option><option value="Ground Stack">Ground Stack</option><option value="Custom">Custom</option>';
+            formfields += '</select></div></div></div>';
     
-  /*  $('.tgl').bootstrapToggle({
-      'on': 'Metric',
-      'off': 'Imperial'
-    });*/
-   // $('#dynamic_form').hide();
-    
-	var dynamic_form =  $("#dynamic_form").dynamicForm("#dynamic_form","#plus5", "#minus5", {
-        limit:10,
-        formPrefix : "dynamic_form",
-        normalizeFullForm : true
-    });
+            formfields += '<div class="col-md-4"><div class="row"><label class="col-md-4">Quantity: </label><div class="col-md-7">';
+            formfields += '<input type="text" class="form-control" name="quantity['+x+']" id="quantity" placeholder="Quantity">';
+            formfields += '</div></div></div>';  
+        
+            formfields += '<div class="button-group">';
+            formfields += '<a href="javascript:void(0)" class="btn btn-danger remove_field">Remove</a></div></div>';
 
-//	dynamic_form.inject([{p_name: 'Hemant',quantity: '123',remarks: 'testing remark'},{p_name: 'Harshal',quantity: '123',remarks: 'testing remark'}]);
-
-    $("#dynamic_form #minus5").on('click', function(){
-    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
-    	if (initDynamicId === 2) {
-    		$(this).closest('#dynamic_form').next().find('#minus5').hide();
-    	}
-    	$(this).closest('#dynamic_form').remove();
-    });
-
-    $('#form_id').on('submit', function(event){
-    	var values = {};
-		$.each($('#form_id').serializeArray(), function(i, field) {
-		    //values[field.name] = field.value;
-            $(field.id).val(field.value);
-		});
-		//console.log(values)
-        results();
-		event.preventDefault();
+            formfields += '</div></div></div>';
+          
+            append = formfields; //+'<a href="#" class="remove_field col-sm-1"> X</a>';
+            $(wrapper).append(append); 
+                         
+            $(".regular").not('.slick-initialized').slick(options);
+			
+            x++; 
+        }
+	});
+	
+	$(wrapper).on("click",".remove_field", function(e){ 
+		e.preventDefault(); $(this).closest('.card').remove(); x--;
 	})
 });
-        
-//////////////////////////////////////////
-   
-
-
 </script>

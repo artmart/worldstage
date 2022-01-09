@@ -543,6 +543,7 @@ $.fn.dynamicForm = function (selectedTarget, plusSelector, minusSelector, option
  * jQuery original clone method decorated in order to fix an IE < 8 issue
  * where attributs especially name are not copied 
  */
+ 
 jQuery.fn.cloneWithAttribut = function( withDataAndEvents ){
 	if ( jQuery.support.noCloneEvent ){
 		return $(this).clone(withDataAndEvents);
