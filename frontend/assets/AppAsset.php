@@ -25,7 +25,10 @@ class AppAsset extends AssetBundle
      'vendors/slick/slick.min.js',
      //"vendors/jquery/dynamic-form.js",
      //"vendors/jquery/duplicateFields.min.js",
-     //'vendors/imagepicker/image-picker/image-picker.min.js'     
+     //'vendors/imagepicker/image-picker/image-picker.min.js'    
+     
+     'vendors/fabric/fabric.min.js',
+     'vendors/jquery/jquery.validate.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

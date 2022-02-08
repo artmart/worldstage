@@ -2,12 +2,17 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
+$action = '/productadditionalsizes/create';
+if(isset($update)){$action = '/productadditionalsizes/update?id='.$model->id;}
 ?>
 
 <div class="products-form">
 <div class="panel-group"> <!-- offset-lg-1 col-lg-10-->
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-    
+    <?php $form = ActiveForm::begin(['action' =>[$action], 'options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php // $form->field($model, 'product_id')->dropDownList(ArrayHelper::map(Products::find()->asArray()->orderBy('product_name')->all(), 'id', 'product_name'), ['prompt'=>'- Select -', 'class'=>'form-control'])
+    echo $form->field($model, 'product_id')->hiddenInput()->label(false); //->textInput() 
+    ?>
 <div class="card">
 <div class="card-header bg-info">Product Data</div>
   <div class="card-body"> 
@@ -68,49 +73,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'full_power_draw_amps')->textInput() ?>    
     </div>
 </div>
-<hr />
-<div class="row">
-<div class="col-lg-6">
-    <?= $form->field($model, 'primary_picture')->radioList(['0'=>'Ground support', '1'=>'Flown', '2' => 'Picture Of Tile']) ?>
-</div>
-</div> 
 
-<!-- 'price_per_tile', 'ground_support', 'flown', 'sandbag_estimate', 'mini_g_block_estimate', 'coloring_time_per_tile_installed', 'repair_time_per_tile_installed'-->
 
-<div class="row">
-    <div class="col-lg-4">
-    <?= $form->field($model, 'link_to_picture_of_tile')->fileInput() ?>
-    <?php 
-	   $file0 = Url::to('@web/uploads/products/'.$model->link_to_picture_of_tile, true);//Yii::getAlias('uploads/products') . "$model->link_to_picture_of_tile";
-		if ($model->link_to_picture_of_tile){ ?>
-			<div class="form-group">
-             <img src="<?=$file0?>" alt="" width="200" height="200">
-			</div>	
-    <?php } ?>  
-    </div>
-    <div class="col-lg-4">
-    <?php // $form->field($model, 'link_to_picture_flown')->textInput(['maxlength' => true]) ?> 
-    <?= $form->field($model, 'link_to_picture_flown')->fileInput() ?>
-    <?php 
-	   $file = Url::to('@web/uploads/products/'.$model->link_to_picture_flown, true);//Yii::getAlias('uploads/products') . "$model->link_to_picture_flown";
-		if ($model->link_to_picture_flown){ ?>
-			<div class="form-group">
-             <img src="<?=$file?>" alt="" width="200" height="200">
-			</div>	
-    <?php } ?>  
-    </div>
-    <div class="col-lg-4">
-    <?php // $form->field($model, 'link_to_picture_ground_support')->textInput(['maxlength' => true]) ?> 
-    <?= $form->field($model, 'link_to_picture_ground_support')->fileInput() ?>
-    <?php 
-	   $file1 = Url::to('@web/uploads/products/'.$model->link_to_picture_ground_support, true);
-		if ($model->link_to_picture_ground_support){ ?>
-			<div class="form-group">
-             <img src="<?=$file1?>" alt="" width="200" height="200">
-			</div>	
-    <?php } ?>    
-    </div>     
-</div>
 
   </div>
 </div>
@@ -146,10 +110,10 @@ use yii\widgets\ActiveForm;
 <div class="card-header bg-info">Coloring and Repair times</div>
   <div class="card-body">
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
     <?= $form->field($model, 'coloring_time_per_tile_installed')->textInput() ?>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
     <?= $form->field($model, 'repair_time_per_tile_installed')->textInput() ?>
     </div>
 </div>

@@ -62,6 +62,7 @@ body {
 
     .slick-slide img {
       width: 100%;
+      height: 100px;
     }
 
     .slick-prev:before,
@@ -99,11 +100,12 @@ $products = Products::find()->all();
     </div>
     <div class="body-content">
     <div class="container">
-    
+   
 <form id="form_id">
 <div class="input_fields_wrap">
     <div class="form-group card">
-    <div class="card-body">     
+    <div class="card-body">   
+      
     <div class="row justify-content-center align-items-center">                        
         
     <div class="col-md-4">
@@ -126,9 +128,9 @@ $products = Products::find()->all();
     <div class="row">
     <label class="col-md-5">Size Type: </label>   
     <div class="col-md-7">
-        <select class="form-control" id="size_type" name="size_type[0]" onchange="sizetypechange(this.id)">
-          <option value="tile">Tile</option>
+        <select class="form-control" id="size_type0" name="size_type[0]" onchange="sizetypechange(0)">
           <option value="physical">Physical</option>
+          <option value="tile">Tile</option>
         </select>
     </div>
     </div>
@@ -140,7 +142,7 @@ $products = Products::find()->all();
     <div class="row">
     <label class="col-md-5 wall_width_label">Wall Width: </label> 
     <div class="col-md-7">
-        <input type="text" name="wall_width[0]" id="wall_width" placeholder="Wall Width" class="form-control">
+        <input type="text" name="wall_width[0]" id="wall_width0" placeholder="Wall Width" value="5" class="form-control">
     </div>
     </div>
     </div>
@@ -149,7 +151,7 @@ $products = Products::find()->all();
     <div class="row">
     <label class="col-md-5 wall_height_label">Wall Height: </label> 
     <div class="col-md-7">
-        <input type="text" name="wall_height[0]" id="wall_height" placeholder="Wall Height" class="form-control">
+        <input type="text" name="wall_height[0]" id="wall_height0" placeholder="Wall Height" value="3" class="form-control">
     </div>
     </div>
     </div> 
@@ -160,14 +162,16 @@ $products = Products::find()->all();
     <section class="regular slider col-md-7">  
     <?php 
     $k=1;
+    foreach($products as $p){
+    $checked = '';
     if($k==1){$checked = 'checked';}else{$checked = '';}
-    foreach($products as $p){  
     $pic = '/uploads/products/no-picture.jpg';
     if($p->link_to_picture_flown){$pic = '/uploads/products/'. $p->link_to_picture_flown;}
     if($p->primary_picture==1 && $p->link_to_picture_ground_support){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
+    if($p->primary_picture==2 && $p->link_to_picture_of_tile){$pic = '/uploads/products/'. $p->link_to_picture_of_tile;}
     ?>
-    <div><label class="btn"><input type="radio" name="wall_type[0]" value="<?=$p->id;?>" <?=$checked;?>><img src="<?=$pic;?>"></label></div>
-    <?php $k++; } ?>  
+    <div><label class="btn"><input type="radio" name="wall_type[0]" value="<?=$p->id;?>" <?=$checked;?> ><img src="<?=$pic;?>"><br /><?=$p->product_name;?></label></div>
+    <?php $k++;} ?>  
     </section> 
     </div> 
        
@@ -189,7 +193,7 @@ $products = Products::find()->all();
     <div class="row">
     <label class="col-md-4">Quantity: </label>    
     <div class="col-md-7">
-        <input type="text" class="form-control" name="quantity[0]" id="quantity" placeholder="Quantity">
+        <input type="text" class="form-control" name="quantity[0]" id="quantity" value="1" placeholder="Quantity">
     </div>
     </div> 
     </div>  
@@ -200,17 +204,16 @@ $products = Products::find()->all();
 </div>
 </div>
 
-</div>
+
 <div class="row justify-content-center align-items-center"> 
 <button type="submit" class="btn btn-primary" onclick="results()">Submit</button>
 <button class="add_field_button btn btn-primary">Add more walls</button>
+<div id="wait" style="display:none; z-index: 1000;" class="justify-content-center align-items-center"> <img src='/img/ajaxloader.gif'/> Loading...</div>
 </div>
 </form>
+ 
 <hr />
-        <div class="row">
-        <div id="wait" style="display:none;position:absolute;top:50%;left:50%;padding:2px; z-index: 1000;"><img src='/img/ajaxloader.gif'/></div>
-        <div id="results"></div>  
-        </div>
+<div class="row"><div id="results"></div> </div>
 </div>
 </div>
 </div>
@@ -218,27 +221,31 @@ $products = Products::find()->all();
 <br />
 <br />
 <script>
- function sizetypechange(id){
-    var div_id = '#wall_width'+id.replace("size_type", "");
-    var div_id2 = '#wall_height'+id.replace("size_type", "");
-    
+ function sizetypechange(id){   
     var wall_width_text = 'Wall Width';
     var wall_height_text = 'Wall Height';
-    if($('#'+id).val()=='tile'){
+    
+    if($('#size_type'+id).val()=='tile'){
             wall_width_text = 'Tiles Wide';
             wall_height_text = 'Tiles Tall';            
         }
-     $(div_id).attr("placeholder", wall_width_text);
-     $(div_id).closest('.row').find('.wall_width_label').text(wall_width_text+':'); 
+        
+        //$('#wall_width'+id).val(wall_width_text);
+        //$('#wall_height'+id).val(wall_height_text);
+        
+    // $('#wall_width'+id).attr("placeholder", wall_width_text);
+     $('#wall_width'+id).closest('.row').find('.wall_width_label').text(wall_width_text+':'); 
      
-     $(div_id2).attr("placeholder", wall_height_text);
-     $(div_id2).closest('.row').find('.wall_height_label').text(wall_height_text+':');
+    // $('#wall_height'+id).attr("placeholder", wall_height_text);
+     $('#wall_height'+id).closest('.row').find('.wall_height_label').text(wall_height_text+':');
  }
 
 
 $("#form_id").submit(function(){return false;});
 	
        function results(){
+        
+         if(!$("#form_id").valid()){return false;}else{
         
         var data = $("#form_id").serialize();
         $.ajax({
@@ -255,6 +262,7 @@ $("#form_id").submit(function(){return false;});
                      //setTimeout( "$('#results').hide();", 4000);
     			}
             }); 
+         }
       }
 
 /*
@@ -305,25 +313,26 @@ var options = {
             formfields += '<label class="btn radio_button"><input type="radio" name="product_sizing['+x+']"  value="1"> Imperial</label></div></div></div></div>';
             
             formfields += '<div class="col-md-4"><div class="row"><label class="col-md-5">Size Type: </label><div class="col-md-7">';
-            formfields += '<select class="form-control" id="size_type" name="size_type['+x+']" onchange="sizetypechange(this.id)">';
-            formfields += '<option value="tile">Tile</option><option value="physical">Physical</option></select></div></div></div></div>';
+            formfields += '<select class="form-control" id="size_type'+x+'" name="size_type['+x+']" onchange="sizetypechange('+x+')">';
+            formfields += '<option value="physical">Physical</option><option value="tile">Tile</option></select></div></div></div></div>';
                         
             formfields += '<div class="row justify-content-center align-items-center mt-2"><div class="col-md-4"><div class="row">';
             formfields += '<label class="col-md-5 wall_width_label">Wall Width: </label><div class="col-md-7">';
-            formfields += '<input type="text" name="wall_width['+x+']" id="wall_width" placeholder="Wall Width" class="form-control"></div></div></div>';
+            formfields += '<input type="text" name="wall_width['+x+']" id="wall_width'+x+'" value="5" placeholder="Wall Width" class="form-control"></div></div></div>';
 
             formfields += '<div class="col-md-4"><div class="row"><label class="col-md-5 wall_height_label">Wall Height: </label><div class="col-md-7">';
-            formfields += '<input type="text" name="wall_height['+x+']" id="wall_height" placeholder="Wall Height" class="form-control"></div></div></div></div>';
+            formfields += '<input type="text" name="wall_height['+x+']" id="wall_height'+x+'" value="3" placeholder="Wall Height" class="form-control"></div></div></div></div>';
             
             formfields += '<div class="row justify-content-center align-items-center mt-2" style="border: 1px solid #702F8A;">'; 
             formfields += '<label class="col-md-2">Wall Type: </label><section class="regular slider col-md-7" id="regular['+x+']">';    
             <?php 
             $k=1;
-            if($k==1){$checked = 'checked';}else{$checked = '';}
             foreach($products as $p){
+            if($k==1){$checked = 'checked';}else{$checked = '';}
             $pic = '/uploads/products/no-picture.jpg';
             if($p->link_to_picture_flown){$pic = '/uploads/products/'. $p->link_to_picture_flown;}
             if($p->primary_picture==1 && $p->link_to_picture_ground_support){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}  
+            if($p->primary_picture==2 && $p->link_to_picture_of_tile){$pic = '/uploads/products/'. $p->link_to_picture_of_tile;}
             //$pic = '/uploads/products/'. $p->link_to_picture_flown;
             //if($p->primary_picture==1){$pic = '/uploads/products/'. $p->link_to_picture_ground_support;}
             ?>
@@ -338,7 +347,7 @@ var options = {
             formfields += '</select></div></div></div>';
     
             formfields += '<div class="col-md-4"><div class="row"><label class="col-md-4">Quantity: </label><div class="col-md-7">';
-            formfields += '<input type="text" class="form-control" name="quantity['+x+']" id="quantity" placeholder="Quantity">';
+            formfields += '<input type="text" class="form-control" name="quantity['+x+']" id="quantity" value="1" placeholder="Quantity">';
             formfields += '</div></div></div>';  
         
             formfields += '<div class="button-group">';

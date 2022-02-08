@@ -86,10 +86,21 @@ class ProductsController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())){ 
                 
+            $link_to_picture_of_tile = UploadedFile::getInstance($model, 'link_to_picture_of_tile');
+                
             $link_to_picture_flown = UploadedFile::getInstance($model, 'link_to_picture_flown');
             $link_to_picture_ground_support = UploadedFile::getInstance($model, 'link_to_picture_ground_support');
             $alias = Yii::getAlias("@frontend/web/uploads/products");
             BaseFileHelper::createDirectory($alias);
+            
+            
+            if (!empty($link_to_picture_of_tile)) {
+                $filename0 = 'tile'.time(); 
+                $name0 = $filename0 . '.' . $link_to_picture_of_tile->extension;
+                $path0 = $alias . DIRECTORY_SEPARATOR . $name0;
+                $model->link_to_picture_of_tile = $name0;
+                $link_to_picture_of_tile->saveAs($path0);
+			} 
             
             if (!empty($link_to_picture_flown)) {
                 $filename = 'flown'.time(); 
@@ -129,15 +140,35 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $file_tile = $model->link_to_picture_of_tile;
         $file_flown = $model->link_to_picture_flown;
         $file_ground = $model->link_to_picture_ground_support;
 
         if ($this->request->isPost && $model->load($this->request->post())){
             
+            
+            
+            $link_to_picture_of_tile = UploadedFile::getInstance($model, 'link_to_picture_of_tile');
             $link_to_picture_flown = UploadedFile::getInstance($model, 'link_to_picture_flown');
             $link_to_picture_ground_support = UploadedFile::getInstance($model, 'link_to_picture_ground_support');
             $alias = Yii::getAlias("@frontend/web/uploads/products");
             BaseFileHelper::createDirectory($alias);
+            
+            if($link_to_picture_of_tile){
+                if($file_tile) {
+                $path0 = Yii::getAlias("@frontend").'/web/uploads/products/'.$file_tile;
+                if(file_exists($path0)){unlink($path0);}
+                }
+
+                $filename0 = 'tile'.time(); 
+                $name0 = $filename0 . '.' . $link_to_picture_of_tile->extension;
+                $path0 = $alias . DIRECTORY_SEPARATOR . $name0;
+                $model->link_to_picture_of_tile = $name0;
+                                    
+                $link_to_picture_of_tile->saveAs($path0);
+			}else{$model->link_to_picture_of_tile = $file_tile;}
+            
             
             if($link_to_picture_flown){
                 if($file_flown) {
@@ -189,6 +220,10 @@ class ProductsController extends Controller
     {
         $model = $this->findModel($id);
         
+        if($model->link_to_picture_of_tile){
+        $path0 = Yii::getAlias("@frontend").'/web/uploads/products/'.$model->link_to_picture_of_tile;
+        if(file_exists($path0)){unlink($path0);}
+        }
         if($model->link_to_picture_flown){
         $path1 = Yii::getAlias("@frontend").'/web/uploads/products/'.$model->link_to_picture_flown;
         if(file_exists($path1)){unlink($path1);}

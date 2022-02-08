@@ -2,17 +2,16 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Repair;
-use frontend\models\RepairSearch;
+use frontend\models\Productadditionalsizes;
+use frontend\models\ProductadditionalsizesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * RepairController implements the CRUD actions for Repair model.
+ * ProductadditionalsizesController implements the CRUD actions for Productadditionalsizes model.
  */
-class RepairController extends Controller
+class ProductadditionalsizesController extends Controller
 {
     /**
      * @inheritDoc
@@ -22,17 +21,6 @@ class RepairController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::className(),
-                    //'only' => ['logout', 'signup', 'index'],
-                    'rules' => [
-                        [
-                            'actions' => ['create', 'update', 'view', 'delete', 'index'],
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -44,12 +32,12 @@ class RepairController extends Controller
     }
 
     /**
-     * Lists all Repair models.
+     * Lists all Productadditionalsizes models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RepairSearch();
+        $searchModel = new ProductadditionalsizesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +47,7 @@ class RepairController extends Controller
     }
 
     /**
-     * Displays a single Repair model.
+     * Displays a single Productadditionalsizes model.
      * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,13 +60,13 @@ class RepairController extends Controller
     }
 
     /**
-     * Creates a new Repair model.
+     * Creates a new Productadditionalsizes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Repair();
+        $model = new Productadditionalsizes();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -95,7 +83,7 @@ class RepairController extends Controller
     }
 
     /**
-     * Updates an existing Repair model.
+     * Updates an existing Productadditionalsizes model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return mixed
@@ -106,8 +94,7 @@ class RepairController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect(['products/view', 'id' => $model->product_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -116,7 +103,7 @@ class RepairController extends Controller
     }
 
     /**
-     * Deletes an existing Repair model.
+     * Deletes an existing Productadditionalsizes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return mixed
@@ -124,7 +111,7 @@ class RepairController extends Controller
      */
     public function actionDelete($id)
     {
-        $model= $this->findModel($id);
+        $model = $this->findModel($id);
         $model->delete();
 
         //return $this->redirect(['index']);
@@ -132,15 +119,15 @@ class RepairController extends Controller
     }
 
     /**
-     * Finds the Repair model based on its primary key value.
+     * Finds the Productadditionalsizes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Repair the loaded model
+     * @return Productadditionalsizes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Repair::findOne($id)) !== null) {
+        if (($model = Productadditionalsizes::findOne($id)) !== null) {
             return $model;
         }
 

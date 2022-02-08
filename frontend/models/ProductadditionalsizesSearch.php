@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Products;
+use frontend\models\Productadditionalsizes;
 
 /**
- * ProductsSearch represents the model behind the search form of `frontend\models\Products`.
+ * ProductadditionalsizesSearch represents the model behind the search form of `frontend\models\Productadditionalsizes`.
  */
-class ProductsSearch extends Products
+class ProductadditionalsizesSearch extends Productadditionalsizes
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,9 @@ class ProductsSearch extends Products
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['product_name', 'link_to_picture_of_tile', 'link_to_picture_ground_support', 'link_to_picture_flown'], 'safe'],
-            [['phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'full_power_draw_amps'], 'number'],
+            [['id', 'product_id'], 'integer'],
+            [['product_name'], 'safe'],
+            [['phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 'recommended_max_height_flown', 'max_height_flown', 'price_per_tile', 'ground_support', 'flown', 'sandbag_estimate', 'mini_g_block_estimate', 'coloring_time_per_tile_installed', 'repair_time_per_tile_installed'], 'number'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ProductsSearch extends Products
      */
     public function search($params)
     {
-        $query = Products::find();
+        $query = Productadditionalsizes::find();
 
         // add conditions that should always apply here
 
@@ -60,6 +60,7 @@ class ProductsSearch extends Products
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'product_id' => $this->product_id,
             'phsyical_width_inches' => $this->phsyical_width_inches,
             'physica_height_inches' => $this->physica_height_inches,
             'pixel_width' => $this->pixel_width,
@@ -71,11 +72,20 @@ class ProductsSearch extends Products
             'case_height_inch' => $this->case_height_inch,
             'case_length_inch' => $this->case_length_inch,
             'full_power_draw_amps' => $this->full_power_draw_amps,
+            'recommended_max_height_ground' => $this->recommended_max_height_ground,
+            'max_height_ground' => $this->max_height_ground,
+            'recommended_max_height_flown' => $this->recommended_max_height_flown,
+            'max_height_flown' => $this->max_height_flown,
+            'price_per_tile' => $this->price_per_tile,
+            'ground_support' => $this->ground_support,
+            'flown' => $this->flown,
+            'sandbag_estimate' => $this->sandbag_estimate,
+            'mini_g_block_estimate' => $this->mini_g_block_estimate,
+            'coloring_time_per_tile_installed' => $this->coloring_time_per_tile_installed,
+            'repair_time_per_tile_installed' => $this->repair_time_per_tile_installed,
         ]);
 
-        $query->andFilterWhere(['like', 'product_name', $this->product_name])
-            ->andFilterWhere(['like', 'link_to_picture_ground_support', $this->link_to_picture_ground_support])
-            ->andFilterWhere(['like', 'link_to_picture_flown', $this->link_to_picture_flown]);
+        $query->andFilterWhere(['like', 'product_name', $this->product_name]);
 
         return $dataProvider;
     }

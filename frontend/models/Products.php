@@ -50,10 +50,12 @@ class Products extends \yii\db\ActiveRecord
     {
         return [
             [['product_name', 'phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'primary_picture'], 'required'],
-            [['phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 'case_width_inch', 'case_height_inch', 'case_length_inch', 'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 'recommended_max_height_flown', 'max_height_flown'], 'number'],
+            [['phsyical_width_inches', 'physica_height_inches', 'pixel_width', 'pixel_height', 'weight_per_tile_lbs', 'hardware_weight_percent', 'tiles_per_case', 
+              'case_width_inch', 'case_height_inch', 'case_length_inch', 'full_power_draw_amps', 'recommended_max_height_ground', 'max_height_ground', 
+              'recommended_max_height_flown', 'max_height_flown', 'price_per_tile', 'ground_support', 'flown', 'sandbag_estimate', 'mini_g_block_estimate', 'coloring_time_per_tile_installed', 'repair_time_per_tile_installed'], 'number'],
             [['product_name'], 'string', 'max' => 255],
             [['primary_picture'], 'integer'],
-            [['link_to_picture_ground_support', 'link_to_picture_flown'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['link_to_picture_of_tile', 'link_to_picture_ground_support', 'link_to_picture_flown'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -75,6 +77,7 @@ class Products extends \yii\db\ActiveRecord
             'case_width_inch' => 'Case Width Inch',
             'case_height_inch' => 'Case Height Inch',
             'case_length_inch' => 'Case Length Inch',
+            'link_to_picture_of_tile' => 'Link To Picture Of Tile',
             'link_to_picture_ground_support' => 'Link To Picture Ground Support',
             'link_to_picture_flown' => 'Link To Picture Flown',
             'full_power_draw_amps' => 'Full Power Draw (Amps)',
@@ -83,6 +86,13 @@ class Products extends \yii\db\ActiveRecord
             'recommended_max_height_flown' => 'Recommended Max Height (Flown)',
             'max_height_flown' => 'Max Height (Flown)',
             'primary_picture' => 'Primary Picture',
+            'price_per_tile' => 'Price Per Tile', 
+            'ground_support' => 'Ground Support', 
+            'flown' => 'Flown', 
+            'sandbag_estimate' => 'Sandbag Estimate', 
+            'mini_g_block_estimate' => 'Mini-g Block Estimate', 
+            'coloring_time_per_tile_installed' => 'Coloring Time Per Tile Installed', 
+            'repair_time_per_tile_installed' => 'Repair Time Per Tile Installed'
         ];
     }
 
@@ -95,16 +105,21 @@ class Products extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Ballasts::className(), ['product_id' => 'id']);
     }
+    
+    public function getAdditionalsizes()
+    {
+        return $this->hasMany(Productadditionalsizes::className(), ['product_id' => 'id']);
+    }
 
     /**
      * Gets query for [[Colorings]].
      *
      * @return \yii\db\ActiveQuery
-     */
+     
     public function getColorings()
     {
         return $this->hasMany(Coloring::className(), ['product_id' => 'id']);
-    }
+    }*/
 
     /**
      * Gets query for [[InstallTimes]].
@@ -120,19 +135,19 @@ class Products extends \yii\db\ActiveRecord
      * Gets query for [[Prices]].
      *
      * @return \yii\db\ActiveQuery
-     */
+     
     public function getPrices()
     {
         return $this->hasMany(Prices::className(), ['product_id' => 'id']);
-    }
+    }*/
 
     /**
      * Gets query for [[Repairs]].
      *
      * @return \yii\db\ActiveQuery
-     */
+     
     public function getRepairs()
     {
         return $this->hasMany(Repair::className(), ['product_id' => 'id']);
-    }
+    }*/
 }
